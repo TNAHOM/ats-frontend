@@ -1,0 +1,23 @@
+import { auth } from "@clerk/nextjs/server"
+import { type NextRequest, NextResponse } from "next/server"
+import { getMockJobById, getMockApplicantsByJobId } from "@/lib/db"
+
+export async function GET(request: NextRequest, { params }: { params: { jobId: string } }) {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    const job = getMockJobById(params.jobId)
+    if (!job || job.userId !== userId) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+    }
+
+    const jobApplicants = getMockApplicantsByJobId(params.jobId)
+    return NextResponse.json(jobApplicants)
+  } catch (error) {
+    console.error("Error fetching applicants:", error)
+    return NextResponse.json({ error: "Failed to fetch applicants" }, { status: 500 })
+  }
+}

@@ -133,11 +133,5 @@
 
 /* Custom gradient utility for brand colors */
 .gradient-brand {
-  background: linear-gradient(
-    90deg,
-    #804981 29.06%,
-    #b26179 59.37%,
-    #d47173 76.23%,
-    #f3806e 91.32%
-  );
+  background: linear-gradient(90deg, #804981 29.06%, #b26179 59.37%, #d47173 76.23%, #f3806e 91.32%);
 }
