@@ -1,6 +1,6 @@
 import { JobDetail } from "@/components/job-detail";
 
-export default function JobDetailPage({
+export default async function JobDetailPage({
   params,
 }: {
   params: { jobId: string };

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useJobDetail } from "@/hooks/use-job-detail";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface JobDetailProps {
   jobId: string;
@@ -12,6 +14,8 @@ interface JobDetailProps {
 
 export function JobDetail({ jobId }: JobDetailProps) {
   const { job, isLoading, error } = useJobDetail(jobId);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const router = useRouter();
 
   if (isLoading) {
     return <div className="text-center py-8">Loading job details...</div>;
@@ -30,6 +34,26 @@ export function JobDetail({ jobId }: JobDetailProps) {
 
   const isDeadlinePassed = new Date(job.deadline) < new Date();
 
+  const handleDelete = async () => {
+    setIsDeleteLoading(true);
+    try {
+      const response = await fetch(`/api/jobs/${jobId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => res.json());
+
+      if (response.error) {
+        throw new Error("Failed to delete the job application");
+      }
+
+      router.push("/jobs");
+    } catch {
+      console.error("Error Deleting the job application");
+    } finally {
+      setIsDeleteLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -46,11 +70,31 @@ export function JobDetail({ jobId }: JobDetailProps) {
             Deadline: {new Date(job.deadline).toLocaleDateString()}
           </p>
         </div>
-        <Link href={`/jobs/${job.id}/applicants`}>
-          <Button className="gradient-brand text-white border-0">
-            View Applicants
-          </Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href={`/jobs/${job.id}/edit`}>
+            <Button
+              variant="outline"
+              disabled={isDeadlinePassed || isDeleteLoading}
+            >
+              Update
+            </Button>
+          </Link>
+          <div>
+            <Button
+              variant="outline"
+              className="text-destructive"
+              onClick={handleDelete}
+              disabled={isDeleteLoading}
+            >
+              Delete
+            </Button>
+          </div>
+          <Link href={`/jobs/${job.id}/applicants`}>
+            <Button className="gradient-brand text-white border-0">
+              View Applicants
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Description */}

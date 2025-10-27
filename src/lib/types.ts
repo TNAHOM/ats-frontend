@@ -8,7 +8,7 @@ export interface Job {
   deadline: Date | string;
   created_at: Date | string;
   updated_at: Date | string;
-  applicant_count?: number;
+  applicant_count: number;
 }
 
 export interface Applicant {
