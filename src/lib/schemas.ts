@@ -6,10 +6,6 @@ export const jobCreationSchema = z.object({
     .string()
     .min(20, "Description must be at least 20 characters")
     .max(5000),
-  // requirements: z
-  //   .string()
-  //   .min(10, "Requirements must be at least 10 characters")
-  //   .transform((val) => val.split("\n").filter((line) => line.trim())),
   requirements: z
     .array(
       z.object({
@@ -38,4 +34,27 @@ export const jobCreationSchema = z.object({
     ),
 });
 
+export const applicationSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().email("Invalid email address"),
+  phoneNumber: z
+    .string()
+    .min(10, "Phone number must be at least 10 characters")
+    .max(20),
+  resume: z
+    .instanceof(File)
+    .refine(
+      (file) => file.size <= 5 * 1024 * 1024,
+      "Resume must be less than 5MB"
+    )
+    .refine(
+      (file) => file.type === "application/pdf",
+      "Resume must be a PDF file"
+    ),
+  seniority_level: z.enum(["JUNIOR", "INTERN", "SENIOR"], {
+    required_error: "Seniority level is required",
+  }),
+});
+
 export type JobCreationInput = z.infer<typeof jobCreationSchema>;
+export type ApplicationInput = z.infer<typeof applicationSchema>;

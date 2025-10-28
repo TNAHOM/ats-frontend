@@ -6,7 +6,7 @@ import {
   getMockApplicantsByJobId,
   getMockApplicantById,
   updateMockApplicantStatus,
-} from "./mockdata"
+} from "./mockdata";
 
 // Export mock data functions for API routes
 export { getMockJobs, getMockJobById, getMockApplicantsByJobId, getMockApplicantById, updateMockApplicantStatus }

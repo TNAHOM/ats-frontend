@@ -120,7 +120,6 @@ export function JobCreationForm({
         body: payload,
       }).then((res) => res.json());
 
-      console.log("API Response job form:", response);
       if (response.error) {
         throw new Error(
           mode === "edit" ? "Failed to update job" : "Failed to create job"
@@ -129,7 +128,7 @@ export function JobCreationForm({
 
       const newOrExistingJobId =
         jobId || response?.data?.id || response?.data?.job?.id;
-      router.push(`/jobs/${newOrExistingJobId}`);
+      router.push(`/dashboard/jobs/${newOrExistingJobId}`);
     } catch (error) {
       console.error(
         mode === "edit" ? "Error updating job:" : "Error creating job:",

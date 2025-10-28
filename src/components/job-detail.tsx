@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useJobDetail } from "@/hooks/use-job-detail";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface JobDetailProps {
@@ -13,7 +13,10 @@ interface JobDetailProps {
 }
 
 export function JobDetail({ jobId }: JobDetailProps) {
-  const { job, isLoading, error } = useJobDetail(jobId);
+  const params = useParams<{ jobId: string | string[] }>();
+  const { jobId: currentJobId } = params;
+  const { job, isLoading, error } = useJobDetail(currentJobId as string);
+
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const router = useRouter();
 
@@ -25,7 +28,7 @@ export function JobDetail({ jobId }: JobDetailProps) {
     return (
       <Card className="p-8 text-center">
         <p className="text-destructive mb-4">{error || "Job not found"}</p>
-        <Link href="/jobs">
+        <Link href="/dashboard/jobs">
           <Button variant="outline">Back to Jobs</Button>
         </Link>
       </Card>
@@ -46,7 +49,7 @@ export function JobDetail({ jobId }: JobDetailProps) {
         throw new Error("Failed to delete the job application");
       }
 
-      router.push("/jobs");
+      router.push("/dashboard/jobs");
     } catch {
       console.error("Error Deleting the job application");
     } finally {
@@ -71,14 +74,12 @@ export function JobDetail({ jobId }: JobDetailProps) {
           </p>
         </div>
         <div className="flex gap-2">
-          <Link href={`/jobs/${job.id}/edit`}>
-            <Button
-              variant="outline"
-              disabled={isDeadlinePassed || isDeleteLoading}
-            >
-              Update
-            </Button>
-          </Link>
+          <Button
+            variant="outline"
+            disabled={isDeadlinePassed || isDeleteLoading}
+          >
+            <Link href={`/dashboard/jobs/${job.id}/edit`}>Update</Link>
+          </Button>
           <div>
             <Button
               variant="outline"
@@ -89,7 +90,7 @@ export function JobDetail({ jobId }: JobDetailProps) {
               Delete
             </Button>
           </div>
-          <Link href={`/jobs/${job.id}/applicants`}>
+          <Link href={`/dashboard/jobs/${job.id}/applicants`}>
             <Button className="gradient-brand text-white border-0">
               View Applicants
             </Button>
@@ -133,7 +134,7 @@ export function JobDetail({ jobId }: JobDetailProps) {
       <ShareJobLink jobId={job.id} />
 
       {/* Back Button */}
-      <Link href="/jobs">
+      <Link href="/dashboard/jobs">
         <Button variant="outline">Back to Jobs</Button>
       </Link>
     </div>

@@ -10,7 +10,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { jobId:
     }
 
     const job = getMockJobById(params.jobId)
-    if (!job || job.userId !== userId) {
+    if (!job || job.user_id !== userId) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 })
     }
 

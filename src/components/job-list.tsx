@@ -17,7 +17,7 @@ export function JobList() {
     return (
       <Card className="p-8 text-center">
         <p className="text-muted-foreground mb-4">No jobs created yet</p>
-        <Link href="/jobs/create">
+        <Link href="/dashboard/jobs/create">
           <Button className="gradient-brand text-white border-0">
             Create Your First Job
           </Button>
@@ -71,10 +71,10 @@ export function JobList() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Link href={`/jobs/${job.id}`}>
+                <Link href={`/dashboard/jobs/${job.id}`}>
                   <Button variant="outline">View Details</Button>
                 </Link>
-                <Link href={`/jobs/${job.id}/applicants`}>
+                <Link href={`/dashboard/jobs/${job.id}/applicants`}>
                   <Button className="gradient-brand text-white border-0">
                     View Applicants
                   </Button>

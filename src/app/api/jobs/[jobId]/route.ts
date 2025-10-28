@@ -1,13 +1,19 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getMockJobById } from "@/lib/db";
 import { cookies } from "next/headers";
+// Temporary type shim to avoid TS error if @types/node isn't installed
+// Remove this once Node types are added to the project devDependencies.
+declare const process: any;
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { jobId: string } }
 ) {
   try {
-    const jobId = params.jobId;
+    const resolvedParams: any =
+      typeof (params as any)?.then === "function"
+        ? await (params as any)
+        : params;
+    const jobId = resolvedParams?.jobId as string | undefined;
 
     const BaseURL = process.env.BaseUrl;
     const cookieStore = await cookies();
@@ -24,9 +30,9 @@ export async function GET(
       },
     }).then((res) => res.json());
 
-    if (response.errorMessage) {
+    if (response.errorMessage || response.error) {
       return NextResponse.json(
-        { error: response.errorMessage },
+        { error: response.errorMessage || response.error },
         { status: response.Code }
       );
     }
@@ -44,7 +50,11 @@ export async function DELETE(
   { params }: { params: { jobId: string } }
 ) {
   try {
-    const jobId = await params.jobId;
+    const resolvedParams: any =
+      typeof (params as any)?.then === "function"
+        ? await (params as any)
+        : params;
+    const jobId = resolvedParams?.jobId as string | undefined;
     if (!jobId) {
       return NextResponse.json(
         { error: "Missing job id in query parameters" },
@@ -69,7 +79,6 @@ export async function DELETE(
       },
     }).then((res) => res.json());
 
-    console.log("API Delete Response:", response);
     if (response.errorMessage) {
       return NextResponse.json(
         { error: response.errorMessage },

@@ -26,6 +26,17 @@ export interface Applicant {
   updatedAt: Date | string;
 }
 
+export interface Application {
+  id: string;
+  jobId: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  resume: string; // URL or base64 of PDF
+  coverLetter?: string;
+  appliedAt: Date | string;
+}
+
 export type ApplicantStatus =
   | "applied"
   | "shortlisted"

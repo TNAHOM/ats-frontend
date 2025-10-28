@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ApplicantsList } from "@/components/applicants-list";
 import { ApplicantDetailSidebar } from "@/components/applicant-detail-sidebar";
-import type { Applicant } from "@/lib/db";
+import type { Applicant } from "@/lib/types";
+import { useParams } from "next/navigation";
 
-export default function Applicants({ params }: { params: { jobId: string } }) {
+export default function Applicants() {
+  const params = useParams<{ jobId: string }>();
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
     null
   );
@@ -22,7 +24,7 @@ export default function Applicants({ params }: { params: { jobId: string } }) {
             Review and manage applicants for this job
           </p>
         </div>
-        <Link href={`/jobs/${params.jobId}`}>
+        <Link href={`/dashboard/jobs/${params.jobId}`}>
           <Button variant="outline">Back to Job</Button>
         </Link>
       </div>

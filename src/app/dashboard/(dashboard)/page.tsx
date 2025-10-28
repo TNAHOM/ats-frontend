@@ -25,7 +25,7 @@ export default function Dashboard() {
             Manage your job postings and applicants
           </p>
         </div>
-        <Link href="/jobs/create">
+        <Link href="dashboard/jobs/create">
           <Button className="gradient-brand text-white border-0">
             Create Job
           </Button>
@@ -62,14 +62,17 @@ export default function Dashboard() {
         ) : recentJobs.length === 0 ? (
           <p className="text-muted-foreground">
             No jobs created yet.{" "}
-            <Link href="/jobs/create" className="text-primary hover:underline">
+            <Link
+              href="dashboard/jobs/create"
+              className="text-primary hover:underline"
+            >
               Create your first job
             </Link>
           </p>
         ) : (
           <div className="space-y-3">
             {recentJobs.map((job) => (
-              <Link key={job.id} href={`/jobs/${job.id}`}>
+              <Link key={job.id} href={`dashboard/jobs/${job.id}`}>
                 <div className="p-4 border border-border rounded hover:bg-muted transition-colors cursor-pointer">
                   <div className="flex items-center justify-between">
                     <div>

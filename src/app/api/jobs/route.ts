@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify(body),
     }).then((res) => res.json());
-    console.log("API Response:", response);
+
     if (response.errorMessage) {
       return NextResponse.json(
         { error: response.errorMessage },
@@ -74,7 +74,6 @@ export async function PATCH(request: NextRequest) {
       body: JSON.stringify(restFields),
     }).then((res) => res.json());
 
-    console.log("API Update Response:", response);
     if (response.errorMessage) {
       return NextResponse.json(
         { error: response.errorMessage },
@@ -103,7 +102,7 @@ export async function GET(request: NextRequest) {
     }
     const accessToken = JSON.parse(atsToken).token;
 
-    const response = await fetch(`${BaseURL}/jobPost/getAllJobPosts`, {
+    const response = await fetch(`${BaseURL}/jobPost/getAllJobPostsByUserId`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

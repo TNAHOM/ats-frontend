@@ -1,12 +1,12 @@
-import type { Job, Applicant } from "./types"
+import type { Job, Applicant } from "./types";
 
 // Mock user ID (in real app, this comes from Clerk)
-const MOCK_USER_ID = "user_123"
+const MOCK_USER_ID = "user_123";
 
 export const mockJobs: Job[] = [
   {
     id: "job_1",
-    userId: MOCK_USER_ID,
+    user_id: MOCK_USER_ID,
     title: "Senior React Developer",
     description:
       "We are looking for an experienced React developer to join our growing team. You will work on building scalable web applications using modern technologies and best practices.",
@@ -25,13 +25,13 @@ export const mockJobs: Job[] = [
       "Optimize application performance",
     ],
     deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
-    updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-    applicantCount: 12,
+    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+    updated_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+    applicant_count: 12,
   },
   {
     id: "job_2",
-    userId: MOCK_USER_ID,
+    user_id: MOCK_USER_ID,
     title: "Full Stack Developer",
     description:
       "Join our team as a Full Stack Developer and work on both frontend and backend technologies. We use modern tech stack and follow agile methodologies.",
@@ -50,13 +50,13 @@ export const mockJobs: Job[] = [
       "Contribute to technical documentation",
     ],
     deadline: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000),
-    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-    updatedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-    applicantCount: 8,
+    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+    updated_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+    applicant_count: 8,
   },
   {
     id: "job_3",
-    userId: MOCK_USER_ID,
+    user_id: MOCK_USER_ID,
     title: "UI/UX Designer",
     description:
       "We are seeking a talented UI/UX Designer to create beautiful and intuitive user interfaces for our web and mobile applications.",
@@ -75,11 +75,11 @@ export const mockJobs: Job[] = [
       "Maintain design consistency",
     ],
     deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    applicantCount: 15,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    applicant_count: 15,
   },
-]
+];
 
 export const mockApplicants: Applicant[] = [
   {
@@ -202,30 +202,35 @@ export const mockApplicants: Applicant[] = [
     createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
   },
-]
+];
 
 // Helper function to get mock data with filtering
-export function getMockJobs(userId: string): Job[] {
-  return mockJobs.filter((job) => job.userId === userId)
+export function getMockJobs(user_id: string): Job[] {
+  return mockJobs.filter((job) => job.user_id === user_id);
 }
 
 export function getMockJobById(jobId: string): Job | undefined {
-  return mockJobs.find((job) => job.id === jobId)
+  return mockJobs.find((job) => job.id === jobId);
 }
 
 export function getMockApplicantsByJobId(jobId: string): Applicant[] {
-  return mockApplicants.filter((app) => app.jobId === jobId)
+  return mockApplicants.filter((app) => app.jobId === jobId);
 }
 
-export function getMockApplicantById(applicantId: string): Applicant | undefined {
-  return mockApplicants.find((app) => app.id === applicantId)
+export function getMockApplicantById(
+  applicantId: string
+): Applicant | undefined {
+  return mockApplicants.find((app) => app.id === applicantId);
 }
 
-export function updateMockApplicantStatus(applicantId: string, status: string): Applicant | undefined {
-  const applicant = mockApplicants.find((app) => app.id === applicantId)
+export function updateMockApplicantStatus(
+  applicantId: string,
+  status: string
+): Applicant | undefined {
+  const applicant = mockApplicants.find((app) => app.id === applicantId);
   if (applicant) {
-    applicant.status = status as any
-    applicant.updatedAt = new Date()
+    applicant.status = status as any;
+    applicant.updatedAt = new Date();
   }
-  return applicant
+  return applicant;
 }

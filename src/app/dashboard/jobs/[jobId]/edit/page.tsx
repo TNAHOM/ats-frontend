@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useJobDetail } from "@/hooks/use-job-detail";
 import { JobCreationForm } from "@/components/job-creation-form";
+import { useParams } from "next/navigation";
 
-export default function EditJobPage({ params }: { params: { jobId: string } }) {
-  const { job, isLoading, error } = useJobDetail(params.jobId);
+export default function EditJobPage() {
+  const param = useParams<{ jobId: string }>();
+  const { job, isLoading, error } = useJobDetail(param.jobId);
 
   if (isLoading) {
     return <div className="text-center py-8">Loading job...</div>;
@@ -17,7 +19,7 @@ export default function EditJobPage({ params }: { params: { jobId: string } }) {
     return (
       <Card className="p-8 text-center">
         <p className="text-destructive mb-4">{error || "Job not found"}</p>
-        <Link href={`/jobs/${params.jobId}`}>
+        <Link href={`/dashboard/jobs/${param.jobId}`}>
           <Button variant="outline">Back to Job</Button>
         </Link>
       </Card>

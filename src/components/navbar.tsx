@@ -19,7 +19,7 @@ export function Navbar() {
 
   const navItems = [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/jobs", label: "Jobs" },
+    { href: "/dashboard/jobs", label: "Jobs" },
   ];
 
   const handleLogout = async () => {
