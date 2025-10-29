@@ -2,12 +2,11 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
     const BaseURL = (globalThis as any).process?.env?.BaseUrl;
-
-    const jobId = params.jobId;
+    const { jobId } = await params;
 
     if (!jobId) {
       return NextResponse.json({ error: "Missing job ID" }, { status: 400 });

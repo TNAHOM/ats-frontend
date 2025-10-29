@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
   Card,
@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2, Calendar, ArrowLeft, CheckCircle } from "lucide-react";
 import { ApplicationModal } from "@/components/application-modal";
-import type { Job } from "@/lib/types";
 import { useJobDetail } from "@/hooks/use-job-detail";
 
 interface JobDetailProps {
@@ -32,6 +31,11 @@ const PublicJobDetails = ({ jobId }: JobDetailProps) => {
   }, [jobId, params]);
 
   const { job, isLoading, error } = useJobDetail(effectiveJobId);
+
+  const deadlinePassed = useMemo(() => {
+    if (!job?.deadline) return false;
+    return new Date(job.deadline).getTime() < Date.now();
+  }, [job?.deadline]);
 
   const handleApplicationSuccess = () => {
     setIsModalOpen(false);
@@ -142,7 +146,7 @@ const PublicJobDetails = ({ jobId }: JobDetailProps) => {
             onClick={() => setIsModalOpen(true)}
             className="w-full gradient-brand"
             size="lg"
-            disabled={isApplicationSuccess}
+            disabled={isApplicationSuccess || deadlinePassed}
           >
             Apply Now
           </Button>

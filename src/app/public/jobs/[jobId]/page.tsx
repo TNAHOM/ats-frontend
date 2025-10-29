@@ -1,9 +1,11 @@
 import PublicJobDetails from "@/components/PublicJobDetails";
 
-export default function PublicJobDetailPage({
+export default async function PublicJobDetailPage({
   params,
 }: {
-  params: { jobId: string };
+  params: Promise<{ jobId: string }>;
 }) {
-  return <PublicJobDetails jobId={params.jobId} />;
+  const { jobId } = await params;
+
+  return <PublicJobDetails jobId={jobId} />;
 }

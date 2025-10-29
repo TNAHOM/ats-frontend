@@ -6,14 +6,10 @@ declare const process: any;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
-    const resolvedParams: any =
-      typeof (params as any)?.then === "function"
-        ? await (params as any)
-        : params;
-    const jobId = resolvedParams?.jobId as string | undefined;
+    const { jobId } = await params;
 
     const BaseURL = process.env.BaseUrl;
     const cookieStore = await cookies();
@@ -47,14 +43,10 @@ export async function GET(
 // DELETE
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
-    const resolvedParams: any =
-      typeof (params as any)?.then === "function"
-        ? await (params as any)
-        : params;
-    const jobId = resolvedParams?.jobId as string | undefined;
+    const { jobId } = await params;
     if (!jobId) {
       return NextResponse.json(
         { error: "Missing job id in query parameters" },
