@@ -16,7 +16,7 @@ export function useApplicants(jobId: string) {
         if (!response.ok) throw new Error("Failed to fetch applicants")
         const data = await response.json()
         // Sort by AI score descending
-        data.sort((a: Applicant, b: Applicant) => b.aiScore - a.aiScore)
+        // data.sort((a: Applicant, b: Applicant) => b.aiScore - a.aiScore)
         setApplicants(data)
         setError(null)
       } catch (err) {

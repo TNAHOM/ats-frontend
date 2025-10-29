@@ -20,10 +20,9 @@ export interface Applicant {
   phoneNumber: string;
   resume: string; // URL to resume file
   coverLetter: string;
-  status: "applied" | "shortlisted" | "interviewing" | "hired" | "rejected";
+  status: "APPLIED" | "INTERVIEWING" | "HIRED" | "REJECTED" | "SHORTLISTED";
   aiScore: number; // 0-100 ranking score
-  createdAt: Date | string;
-  updatedAt: Date | string;
+  created_at: Date | string;
 }
 
 export interface Application {
@@ -38,11 +37,11 @@ export interface Application {
 }
 
 export type ApplicantStatus =
-  | "applied"
-  | "shortlisted"
-  | "interviewing"
-  | "hired"
-  | "rejected";
+  | "APPLIED"
+  | "INTERVIEWING"
+  | "HIRED"
+  | "REJECTED"
+  | "SHORTLISTED";
 
 export interface ApiResponse<T> {
   data?: T;
